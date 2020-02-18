@@ -21,10 +21,15 @@ public class Course implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	public Course(String name) {
+		super();
+		this.name = name;
+	}
+
 	private String name;
 }
