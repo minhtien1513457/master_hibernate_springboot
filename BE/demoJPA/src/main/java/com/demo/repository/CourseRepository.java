@@ -3,7 +3,7 @@ package com.demo.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
@@ -16,7 +16,6 @@ import com.demo.entity.Course;
 
 @Repository
 @Transactional
-@NamedQuery (name = "get_all_course", query = "select c from Course c")
 public class CourseRepository {
 	@Autowired
 	EntityManager em;
@@ -60,8 +59,14 @@ public class CourseRepository {
 		
 		TypedQuery<Course> query = em.createNamedQuery("get_all_course",Course.class);
 		List<Course> result = query.getResultList();
-		
 		logger.info("all course -> {}",result);
+		
+		Query queryNative = em.createNativeQuery("select * from Course c where c.id=:id", Course.class);
+		queryNative.setParameter("id", 25);
+		List<Course> result2 = queryNative.getResultList();
+		logger.info("query native -> {}",result2);
+
+		
 	}
 	
 	
