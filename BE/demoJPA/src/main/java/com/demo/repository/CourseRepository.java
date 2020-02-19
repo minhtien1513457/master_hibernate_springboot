@@ -1,7 +1,13 @@
 package com.demo.repository;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
+import javax.persistence.TypedQuery;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,10 +16,12 @@ import com.demo.entity.Course;
 
 @Repository
 @Transactional
+@NamedQuery (name = "get_all_course", query = "select c from Course c")
 public class CourseRepository {
 	@Autowired
 	EntityManager em;
 	
+	Logger logger = LoggerFactory.getLogger(CourseRepository.class);
 	
 	
 	public Course findById(long id) {
@@ -49,6 +57,11 @@ public class CourseRepository {
 		em.detach(course2);
 		course2.setName("update2");
 		em.flush();
+		
+		TypedQuery<Course> query = em.createNamedQuery("get_all_course",Course.class);
+		List<Course> result = query.getResultList();
+		
+		logger.info("all course -> {}",result);
 	}
 	
 	
