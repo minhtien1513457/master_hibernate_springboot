@@ -61,10 +61,15 @@ public class CourseRepository {
 		List<Course> result = query.getResultList();
 		logger.info("all course -> {}",result);
 		
-		Query queryNative = em.createNativeQuery("select * from Course c where c.id=:id", Course.class);
-		queryNative.setParameter("id", 25);
-		List<Course> result2 = queryNative.getResultList();
-		logger.info("query native -> {}",result2);
+		Query queryParam = em.createNamedQuery("find_course_by_id", Course.class);
+		queryParam.setParameter("id", 17L);
+		List<Course> result3 = queryParam.getResultList();
+		logger.info("query find -> {}",result3);
+		
+//		Query queryNative = em.createNativeQuery("find_course_by_id_native", Course.class);
+//		queryNative.setParameter("id", 17);
+//		List<Course> result2 = queryNative.getResultList();
+//		logger.info("query native find -> {}",result2);
 
 		
 	}
