@@ -41,30 +41,32 @@ public class CourseRepository {
 		return course;
 	}
 	
+		
 	public void play() {
 		Course course1 = new Course("hello1");
 		em.persist(course1);
 		em.flush();
+		//course1.setName("update");
 		
-		course1.setName("update1");
-		em.flush();
-
-		Course course2 = new Course("hello2");
-		em.persist(course2);
-		em.flush();
-
-		em.detach(course2);
-		course2.setName("update2");
-		em.flush();
-		
-		TypedQuery<Course> query = em.createNamedQuery("get_all_course",Course.class);
-		List<Course> result = query.getResultList();
-		logger.info("all course -> {}",result);
-		
-		Query queryParam = em.createNamedQuery("find_course_by_id", Course.class);
-		queryParam.setParameter("id", 17L);
-		List<Course> result3 = queryParam.getResultList();
-		logger.info("query find -> {}",result3);
+//		course1.setName("update1");
+//		em.flush();
+//
+//		Course course2 = new Course("hello2");
+//		em.persist(course2);
+//		em.flush();
+//
+//		em.detach(course2);
+//		course2.setName("update2");
+//		em.flush();
+//		
+//		TypedQuery<Course> query = em.createNamedQuery("get_all_course",Course.class);
+//		List<Course> result = query.getResultList();
+//		logger.info("all course -> {}",result);
+//		
+//		Query queryParam = em.createNamedQuery("find_course_by_id", Course.class);
+//		queryParam.setParameter("id", 17L);
+//		List<Course> result3 = queryParam.getResultList();
+//		logger.info("query find -> {}",result3);
 		
 //		Query queryNative = em.createNativeQuery("find_course_by_id_native", Course.class);
 //		queryNative.setParameter("id", 17);
