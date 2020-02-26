@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.demo.entity.Course;
+import com.demo.entity.Student;
 
 @Repository
 @Transactional
@@ -43,9 +44,10 @@ public class CourseRepository {
 	
 		
 	public void play() {
-		Course course1 = new Course("hello1");
-		em.persist(course1);
-		em.flush();
+		
+//		Course course1 = new Course("hello1");
+//		em.persist(course1);
+//		em.flush();
 		//course1.setName("update");
 		
 //		course1.setName("update1");
@@ -72,7 +74,24 @@ public class CourseRepository {
 //		queryNative.setParameter("id", 17);
 //		List<Course> result2 = queryNative.getResultList();
 //		logger.info("query native find -> {}",result2);
+		
+		TypedQuery<Course> query_get_courses_without_student = em.createQuery("select c from Course c where c.students is empty",Course.class);
+		List<Course> result = query_get_courses_without_student.getResultList();
+		
+		TypedQuery<Course> query_get_courses_atleast_2_student = em.createQuery("select c from Course c where size(c.students) >=2",Course.class);
+		List<Course> result1 = query_get_courses_atleast_2_student.getResultList();
+		
+		TypedQuery<Course> query_get_courses_order_by_size_student = em.createQuery("select c from Course c where order by size(c.students) desc",Course.class);
+		List<Course> result2 = query_get_courses_order_by_size_student.getResultList();
 
+		TypedQuery<Student> query_get_student_have_passport_like = em.createQuery("select s from Student s where s.passport.number like '%123%'",Student.class);
+		List<Student> result3 = query_get_student_have_passport_like.getResultList();
+		
+		Query query_left_join = em.createQuery("select c, s from Course c LEFT JOIN c.students s",Student.class);
+		List<Object[]> result4 = query_left_join.getResultList();
+		
+		Query query_cross_join = em.createQuery("select c, s from Course c, Student s",Student.class);
+		List<Object[]> result5 = query_cross_join.getResultList();
 		
 	}
 	
