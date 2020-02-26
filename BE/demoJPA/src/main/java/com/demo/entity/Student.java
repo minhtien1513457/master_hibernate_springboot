@@ -2,6 +2,8 @@ package com.demo.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,9 +40,16 @@ public class Student implements Serializable{
 	@OneToOne(fetch = FetchType.LAZY)
 	private Passport passport;
 	
+	@ManyToMany
+	private List<Course> courses = new ArrayList<Course>();
+	
 	@CreationTimestamp
 	private LocalDateTime create_time;
 	
 	@UpdateTimestamp
 	private LocalDateTime update_time;
+	
+	public void addCourse(Course c) {
+		this.courses.add(c);
+	}
 }
