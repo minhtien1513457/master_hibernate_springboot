@@ -9,6 +9,8 @@ import javax.persistence.TypedQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,6 +95,13 @@ public class CourseRepository {
 		Query query_cross_join = em.createQuery("select c, s from Course c, Student s",Student.class);
 		List<Object[]> result5 = query_cross_join.getResultList();
 		
+		//jparepositor
+//		Sort sort = new Sort(Sort.Direction.DESC, "name");
+//		logger.info("all course -> {}",repository.findAll(sort));
+//		PageRequest pageRequest = PageRequest.of(1,10);
+//		logger.info("all course -> {}",repository.findAll(pageRequest));
+//		@Query("select * from Course c")
+//		List<Course> getListCourse();
 	}
 	
 	
